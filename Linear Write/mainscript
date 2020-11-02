@@ -1,0 +1,34 @@
+#!/bin/bash
+
+a1=LinearWrite.o
+a2=LinearWrite4.o
+
+gcc LinearWrite.c -o $a1
+gcc LinearWrite4.c -o $a2
+
+rm -f a.txt
+rm -f time.dat
+rm -f graph.png
+echo "0 0" >> a.txt
+
+./script $a1 $a2 1
+./script $a1 $a2 2
+./script $a1 $a2 4
+./script $a1 $a2 8
+./script $a1 $a2 16
+./script $a1 $a2 32
+./script $a1 $a2 64
+./script $a1 $a2 128
+./script $a1 $a2 256
+./script $a1 $a2 512
+./script $a1 $a2 1024
+./script $a1 $a2 2048
+./script $a1 $a2 4096
+./script $a1 $a2 8192
+./script $a1 $a2 16384
+./script $a1 $a2 32768
+./script $a1 $a2 65536
+
+echo "Generating dat file and graph"
+cat a.txt &>>time.dat
+

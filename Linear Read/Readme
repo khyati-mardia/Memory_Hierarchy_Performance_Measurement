@@ -1,0 +1,38 @@
+
+Khyati Mardia - ASU ID - 1216346587
+
+Linear Read :
+
+Files present in the folder: 
+
+1. LinearRead.c  : contains complete program linear read
+2. LinearRead4.c : where the for loop is commented which reads each element of the array
+3. makefile      : makefiles for c files
+4. mainscript    : mainscript takes arraysize inputs ranging from 1 to 65536 numbers and calculates time in nanoseconds. Output is obtained in time.dat file (First program execution time ,second program 			   execution time and total time in nanoseconds for various elements) Time in nanoseconds is the average access time per element.
+5. script        : mainscript uses script. 
+
+Time is calculated for reading each array elements by taking difference of (Time execution for LinearRead.c) - (Time execution for LinearRead4.c)
+
+Steps :
+
+i) make LinearRead.c and LinearRead4.c and create object files.
+ii) Copy the mainscript by command  : chmod u+x mainscript
+iii) Copy the script by command  : chmod u+x script
+iv) Run command : taskset -c 1 ./mainscript
+
+The values are obtained using perf and commands are found in mainscript and script.
+ 
+All program files are warning free.
+
+Make sure all mainscript, script, .c and .o files are in same folder.
+
+
+To run program in gem5 : 
+
+1. Go to the gem5 folder and open terminal.
+2. Run the command
+
+./build/X86/gem5.opt --outdir=Path_Of_The_Folder_Where_You_Want_To_SaveFile-eg./home/khyati/workspace/gem5-op/LinearRead4-Gem5-65536 configs/example/se.py --cpu-type=DerivO3CPU --caches --l1i_size=32kB --l1d_size=64kB --l2cache --l2_size=256kB -c Path_of_the_program-eg./home/khyati/workspace/LinearRead4/LinearRead4 --options=Array_Size-eg.4
+
+
+

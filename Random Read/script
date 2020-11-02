@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MUL=2000000
+NS=0.000000001
+
+echo "Number of elements $3"
+FIRSTV=$(sudo perf stat -e cache-misses,cache-references,cpu-cycles ./$1 $3 2>&1 >/dev/null | tail -n 2 | sed 's/ \+//' | sed 's/ /,/')
+F=$(cut -d',' -f1 <<< "$FIRSTV")
+echo "Exec Time with overhead $F"
+SECONDV=$(sudo perf stat -e cache-misses,cache-references,cpu-cycles ./$2 $3 2>&1 >/dev/null | tail -n 2 | sed 's/ \+//' | sed 's/ /,/')
+S=$(cut -d',' -f1 <<< "$SECONDV")
+echo "Exec time without overhead $S"
+diff=$(echo "$F - $S" | bc)
+#echo $diff
+t=$( bc <<< "scale=10; $diff / $MUL" )
+#echo $t
+avg=$( bc <<< "scale=10; $t / $3" )
+#echo $avg
+nanotime=$( bc <<< "scale=10; $avg / $NS" )
+echo "$3  $F $S $nanotime " >> a.txt
+echo "Average time per element $nanotime nanoseconds"
+#echo "," >> a.txt
+printf "\n"
+
+
